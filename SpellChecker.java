@@ -1,3 +1,4 @@
+import javax.swing.plaf.synth.SynthStyle;
 
 public class SpellChecker {
 
@@ -5,7 +6,6 @@ public class SpellChecker {
 	public static void main(String[] args) {
 		String word = args[0];
 		int threshold = Integer.parseInt(args[1]);
-		word = word.toLowerCase();
 		String[] dictionary = readDictionary("dictionary.txt");
 		String correction = spellChecker(word, threshold, dictionary);
 		System.out.println(correction);
@@ -23,6 +23,8 @@ public class SpellChecker {
 
 	public static int levenshtein(String word1, String word2) {
 		int levenValue = 0;
+		word1 = word1.toLowerCase();
+		word2 = word2.toLowerCase();		
 		if (word1.length() == 0){
 			levenValue = word2.length();
 		} else if (word2.length() == 0) {
