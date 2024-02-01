@@ -11,13 +11,36 @@ public class SpellChecker {
 	}
 
 	public static String tail(String str) {
-		// Your code goes here
-		return "";
+		String newTail = "";
+		if (str.length() == 1){
+			newTail = "";
+		} else {
+			newTail = str.substring(1, str.length());
+		}
+		return newTail;
 	}
 
 	public static int levenshtein(String word1, String word2) {
-		// Your code goes here
-		return 0;
+		int levenValue = 0;
+		if (word1.length() == 0){
+			levenValue = word2.length();
+		} else if (word2.length() == 0) {
+			levenValue = word1.length();
+		} else if (word1.charAt(0) == word2.charAt(0)){
+			levenValue = levenshtein(tail(word1), tail(word2));
+		} else {
+			int minLeven = Math.min(
+								Math.min(
+									levenshtein(tail(word1), word2), 
+									levenshtein(word1, tail(word2))), 
+							  	levenshtein(tail(word1), tail(word2)
+								)
+							);
+			levenValue = 1 + minLeven;
+
+		}
+
+		return levenValue;
 	}
 
 	public static String[] readDictionary(String fileName) {
@@ -30,13 +53,15 @@ public class SpellChecker {
 	}
 
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
-		String newWord = "";
+		String newWord = word;
+		int minLevenValue = threshold + 1;
+		int curLevenValue = 0;
 		for(int i = 0; i < dictionary.length; i++){
-			if (levenshtein(word, dictionary[i]) <= threshold) {
+			curLevenValue = levenshtein(word, dictionary[i]);
+			if (curLevenValue < minLevenValue) {
 				newWord = dictionary[i];
-			} else{
-				return "";
-			}
+				minLevenValue = curLevenValue;
+			} 
 		}
 		return newWord;
 	}
