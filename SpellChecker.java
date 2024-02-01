@@ -12,24 +12,33 @@ public class SpellChecker {
 
 	public static String tail(String str) {
 		// Your code goes here
+		return "";
 	}
 
 	public static int levenshtein(String word1, String word2) {
 		// Your code goes here
+		return 0;
 	}
 
 	public static String[] readDictionary(String fileName) {
 		String[] dictionary = new String[3000];
-
 		In in = new In(fileName);
-
-		// Your code here
-
+		for (int i = 0; i < dictionary.length; i++){
+			dictionary [i] = in.readLine();
+		}
 		return dictionary;
 	}
 
 	public static String spellChecker(String word, int threshold, String[] dictionary) {
-		// Your code goes here
+		String newWord = "";
+		for(int i = 0; i < dictionary.length; i++){
+			if (levenshtein(word, dictionary[i]) <= threshold) {
+				newWord = dictionary[i];
+			} else{
+				return "";
+			}
+		}
+		return newWord;
 	}
 
 }
